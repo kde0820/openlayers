@@ -1,0 +1,50 @@
+<html>
+
+<head>
+    <title>Basic Map</title>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.1.3/css/ol.css" type="text/css">
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.1.3/build/ol.js"></script>
+    <style>
+        div#map {
+            width: 100%;
+            height: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="mouse-position"></div>
+    <script>
+        var layers = [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            })
+        ];
+
+        var mousePositionControl = new ol.control.MousePosition({
+            coordinateFormat: ol.coordinate.createStringXY(4),
+            projection: 'EPSG:4326',
+            className: 'custom-mouse-position',
+            target: 'mouse-position',
+            undefinedHTML: '&nbsp'
+        });
+
+        var map = new ol.Map({
+            target: 'map',
+            layers: layers,
+            controls: ol.control.defaults({
+                attributionOptions: {
+                    collapsible: false
+                }
+            }).extend([mousePositionControl]),
+            view: new ol.View({
+                center: [0, 0],
+                zoom: 2
+            })
+        });
+    </script>
+</body>
+
+</html>
